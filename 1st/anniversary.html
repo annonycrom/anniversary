@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Dancing+Script&family=Allura&family=Parisienne&family=Alex+Brush&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anniversary Surprise</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            height: 100vh;
+            margin: 0;
+            background-color: #f7eaea;
+            font-family: Arial, sans-serif;
+        }
+        .envelope {
+            width: 300px;
+            height: 200px;
+            position: relative;
+            background-color: #ffcccc;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            cursor: pointer;
+            transition: transform 0.3s ease, height 0.5s ease;
+        }
+        .envelope:hover {
+            transform: scale(1.05);
+        }
+        .envelope.open {
+            height: 600px; /* Double the height when opened */
+        }
+        .flap {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 60%; /* Keep the flap height the same */
+            border-radius: 10px;
+            background-color: #e60073;
+            clip-path: polygon(50% 100%, 0% 0%, 100% 0%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: transform 2s ease;
+            z-index: 2;
+            transform-origin: top;
+        }
+        .flap::after {
+            content: '\2764'; /* Heart symbol */
+            color: #fff;
+            font-size: 40px;
+            animation: beat 1s infinite;
+        }
+        @keyframes beat {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.2);
+            }
+        }
+        .envelope.open .flap {
+            transform: rotateX(180deg); /* Rotate the flap without stretching */
+        }
+        .letter {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 100%;
+            font-family: 'Great Vibes', cursive;
+            line-height: 1.8;
+            max-height: 600px; /* Set a max height */
+            background: #fff;
+            border-radius: 10px;
+            text-align: center;
+            padding: 20px;
+            box-sizing: border-box;
+            transform: translate(-50%, -50%) scale(0);
+            transition: transform 0.5s ease, opacity 0.5s ease;
+            opacity: 1;
+            visibility: hidden;
+            overflow-y: auto; /* Makes the content scrollable */
+        }
+        ::-webkit-scrollbar{
+          display: none;
+        }
+        .envelope.open .letter {
+            transform: translate(-50%, -50%) scale(1);
+            opacity: 1;
+            visibility: visible;
+        }
+        .content {
+            font-family: 'Alex Brush', cursive;
+            font-size: 30px;
+            color: #333;
+            margin-bottom: 10px;
+        }
+        .image-container {
+            margin: 10px 0;
+        }
+        .image-container img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+        }
+        .message-container {
+            font-size: 100px;
+            color: #555;
+            margin-top: 10px;
+            text-align: center;
+            white-space: pre-wrap; /* Maintains line breaks */
+        }
+        .confetti {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 100;
+        }
+        
+        .confetti div {
+            position: absolute;
+            width: 15px;
+            height: 15px;
+            background: red;
+            opacity: 0.7;
+            transform: rotate(50deg);
+            animation: fall 4s ease-in-out, sway 1s ease-in-out infinite;
+            opacity: 0;
+        }
+        @keyframes fall {
+            0% {
+                top: -10px;
+                opacity: 1; /* Fully visible at the top */
+            }
+            50%{
+                opacity: 0.5; /* Slightly faded */
+            }
+            100% {
+                top: 100vh; /* At the bottom of the screen */
+                opacity: 0; /* Fully faded */
+            }
+        }
+
+        @keyframes sway {
+            0% {
+                transform: translateX(20) translateY(10);
+            }
+            25% {
+                transform: translateX(20px) translateY(-10px);
+            }
+            
+            75% {
+                transform: translateX(-20px) translateY(-10px);
+            }
+            100% {
+                transform: translateX(0) translateY(0);
+            }
+        }
+        @media (max-width: 768px) {
+            .content, .message-container {
+                font-size: 5vw; /* Larger font size for smaller screens */
+            }
+            .envelope {
+                width: 90vw; /* Adjust width for smaller screens */
+                height: 60vw; /* Adjust height for smaller screens */
+            }
+            .letter {
+                padding: 15px; /* Reduce padding */
+            }
+        }
+        
+    </style>
+</head>
+<body>  
+<footer>
+  
+</footer>
+
+    <audio id="audio1" >
+        <source src="A Thousand Years - Christina Perri (Lyrics).mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+    
+    <audio id="audio2" >
+        <source src="Christina Perri ft. Steve Kazee - A Thousand Years Part 2 (Lyrics).mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+
+
+    <div class="envelope" onclick="toggleEnvelope()">
+        <div class="flap"></div>
+        <div class="letter">
+            <div class="content"><b>Happy 1st Anniversary Sweetie! ❤️</b> <br>Here's to many more wonderful years together!</div>
+            
+            <!-- Image and message placeholders -->
+            <div class="image-container">
+                <img src="picture 1.jpeg" alt="Anniversary Photo 1">
+            </div>
+            <div class="message-container">
+                <p>We started as strangers, just classmates in the same space,But your presence stood out, impossible to erase.Your smile, so quiet, made my guarded heart melt,And your gaze—piercing, intense—was unlike anything I'd felt.The first time I looked into your eyes, I was caught,By that straight, angry gaze that others might not have sought.Some might call me strange for finding it so captivating,But to me, it was charming, endlessly fascinating.Just seeing you was enough to brighten my day,Even though our worlds didn’t yet intertwine in any way. You’d ask, “What’s your problem?” in a tone so intimidating,Like every glance or meeting was somehow aggravating.But behind those words, I felt something more,A spark, a pull, I couldn’t ignore.And while we weren’t yet we in those fleeting times,You were already the muse of my silent rhymes.</p>
+            </div>
+
+            <div class="image-container">
+                <img src="picture 2.jpg" alt="Anniversary Photo 2">
+            </div>
+            <div class="message-container">
+                <p>As time went on, this feeling grew too strong to ignore,Just seeing you each day no longer felt like enough—I wanted more.So, I gathered my courage and dared to ask,If you’d let my feelings reach you, a daunting task.But your reply, “Are you serious?” stopped my heart for a beat,I thought about what we were—just classmates, barely complete.Not even friends, just faces passing by,Yet I couldn’t let this chance slip by.Summoning my courage once again, I said, “Yes, I’m serious.”Our online conversation grew, quiet yet curious.Through the night, words danced between us,Until finally, your answer fell, sharp and luminous.“Sorry, I’m not ready yet,” you gently wrote,And with those words, my hopes lost their note.Bittersweet, I held on to the moment we shared,Even though it left my heart unprepared./p>
+            </div>
+
+            <div class="image-container">
+                <img src="picture 3.jpeg" alt="Anniversary Photo 3">
+            </div>
+            <div class="message-container">
+                <p>But then, you asked again, “Are you really serious?” A glimmer of hope sparked in me, soft yet mysterious. Without hesitation, I replied, “Yes, I’m really serious.”Your response came: “I’m not ready to be in a relationship yet.”Those words, though bittersweet, brought back the hope I’d almost let.I steadied myself and replied, “I’ll wait until you’re ready.”Your cold response—“Up to you”—felt distant yet steady.Though your words were sharp, I found warmth within,A quiet comfort, a place for this bond to begin.As the days went by, we saw each other at school,Yet in person, we barely spoke, abiding by an unspoken rule.No one else knew of the bond we were starting to create,Though few words were exchanged, something deep was at stake.Through messages, our world quietly began to bloom,Sharing thoughts, jokes, and secrets, dissolving any gloom.Meters apart, yet our chats kept us near,In this small world of ours, everything felt clear.It wasn’t grand gestures or public displays,But in the quiet of messages, we found our ways.That’s how it started, a connection undefined,A little world of ours, uniquely intertwined.</p>
+            </div>
+
+            <div class="image-container">
+                <img src="picture 4.jpg" alt="Anniversary Photo 4">
+            </div>
+            <div class="message-container">
+                <p>Then the day finally came—the moment you said, “You can court me now.” Although your final answer was still unclear, and I didn’t know how long it would take for my feelings to truly reflect in your heart, I gave everything I had—all of myself—to prove that my love was genuine and no fleeting spark. We began dating, and soon everyone knew. At first, it was butterflies, sweetness, and a love so true. It felt eternal, as though this joy would never fade, A perfect moment we thought we’d always have made. But then, as time went on, problems began to arise, Arguments and fights that caught us by surprise. There were times we’d fall silent, words left unsaid, Moments where doubt or frustration hung overhead. Yet, through it all, we chose to stay, To resolve, to accept, and to find a better way. We embraced each other’s flaws, attitudes, and quirks, Discovering that love is built through both joy and the hard work. Our synergy grew, an unexplainable chemistry, A bond strengthened by laughter, tears, and shared history. We argued, we fixed, we stumbled, we grew, Sharing emotions that became our mutual glue. As time deepened our connection, we became each other's support, A love forged not just in perfection, but in effort and effort's retort. Together, we laughed, cried, and faced each storm, Building a love that’s ever-evolving, ever warm.</p>
+            </div>
+
+            <div class="image-container">
+                <img src="picture 5.jpg" alt="Anniversary Photo 5">
+            </div>
+            <div class="message-container">
+                <p>After eight months of ups and downs, of shared laughter and tears, the day finally came—the day you were ready to give me your answer. We were on a video call, but instead of speaking, we were typing out our messages, as we often did. Then suddenly, in the middle of our conversation, you typed my name, followed by a single word: “Yes.” For a moment, I was stunned, unsure of what you meant. “What do you mean, yes?” I quickly typed back, my heart racing with anticipation. And then, you replied, “Sinasagot na kita.” Those words sent my emotions into a whirlwind, An unexplainable feeling of joy overwhelmed me, And the happiness was written all over my face as I tried to process it all. But then, you added, “Let’s make it official on the 28th.” I glanced at the date—it was December 24, Christmas Eve. In that moment, I couldn’t help but wonder if this was the greatest gift sent to me from above. One thing was certain—it truly was a gift, A treasure I vowed to cherish forever, A love that started as a dream and became my most cherished reality.</p>
+            </div>
+
+            <div class="image-container">
+                <img src="picture 6.jpg" alt="Anniversary Photo 6">
+            </div>
+            <div class="message-container">
+                <p>You become my best friend and my soulmate.</p>
+            </div>
+            
+            <div class="image-container">
+                <img src="picture 7.jpeg" alt="Anniversary Photo 7">
+            </div>
+            <div class="message-container">
+                <p>As time flew by, our love grew deeper and deeper, Taking root in each other’s hearts, becoming stronger and sweeter. Even now, I vividly remember those cherished moments, Etched in my memory like a beautiful, endless fragment. I still recall the first time you said “I love you” in person, The way your voice carried a warmth that made my world brighten. And the day you kissed me on the cheek for the very first time, A simple gesture that felt both tender and sublime. These moments, though small, hold a place so profound, Building the love we share, where true happiness is found. With every memory we create, my heart finds new meaning, A love that continues to grow, steady and unceasing.</p>
+            </div>
+
+            <div class="image-container">
+                <img src="picture 8.jpeg" alt="Anniversary Photo 8">
+            </div>
+            <div class="message-container">
+                <p>With you, every day is an adventure.</p>
+            </div>
+            
+            <div class="image-container">
+                <img src="picture 9.jpeg" alt="Anniversary Photo 9">
+            </div>
+            <div class="message-container">
+                <p>As our relationship grew, challenges began to unfold, Like every love story, not all moments were gold. We argued, sometimes over and over again, Moments of tension, of frustration, of pain. But through it all, we found a way to make it work, Learning from each fight, even when emotions lurk. We chose each other, despite the storms we’d face, Finding strength in love, in patience, in grace. Each problem became a lesson, each argument a chance, To deepen our bond, to strengthen our stance. For love isn’t perfect, but it’s a journey we share, A constant choice to stay, to show that we care.</p>
+            </div>
+            
+            <div class="image-container">
+                <img src="picture 10.jpeg" alt="Anniversary Photo 10">
+            </div>
+            <div class="message-container">
+                <p>And here we are now, celebrating our first anniversary, A year filled with challenges, laughter, and love’s intensity. Through every high and every low, we’ve stood side by side, Facing each moment with courage, with love as our guide. From the first spark to the deep bond we share today, Every struggle and every joy has paved our way. Our journey hasn’t been perfect, but it’s been ours, Built on trust, patience, and countless hours. Today, we celebrate not just a year, but the promise we’ve made, A love that’s strong, even when it’s been tested and swayed. Here’s to us, to the memories we’ve created and more to come, To the love that started as a wish and has become our home.</p>
+            </div>
+            
+            <div class="image-container">
+                <img src="picture 11.jpeg" alt="Anniversary Photo 11">
+            </div>
+            <div class="message-container">
+                <p>My love for you grows even more with each passing day.</p>
+            </div>
+            
+            <div class="image-container">
+                <img src="image12.jpg" alt="Anniversary Photo 12">
+            </div>
+            <div class="message-container">
+                <p>Happy 1st anniversary, my love! I can't believe it's already been a year filled with so many moments—both big and small—that have made our bond so special. From our first laugh to our first fight, every memory we’ve created is a piece of our story that I treasure deeply. We’ve shared so much—challenges that tested us and moments that brought us even closer. I know there will be more times when we’ll argue and even throw “kaldero” and “kawali” in playful frustration, but I wouldn’t have it any other way. Those are the moments that make us, that remind me how much I love you and how lucky I am to have you by my side. Here's to us, to the love we share, and to all the years ahead. More adventures, more laughter, and more love—forever and always. Happy anniversary, sweetie. I love you more than words can say.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="confetti"></div>
+
+    <script>
+        const envelope = document.querySelector('.envelope');
+        const confettiContainer = document.querySelector('.confetti');
+        const audio1 = document.getElementById('audio1');
+        const audio2 = document.getElementById('audio2');
+
+        function toggleEnvelope() {
+            envelope.classList.toggle('open');
+            if (envelope.classList.contains('open')) {
+              startConfetti();
+              startAudio();
+            }
+        }
+        function startConfetti() {
+            for (let i = 0; i < 100; i++) {
+                const confetti = document.createElement('div');
+                confetti.style.left = `${Math.random() * 100}%`;
+                confetti.style.animationDelay = `${Math.random() * 3}s`;
+                confetti.style.backgroundColor = getRandomColor();
+                confettiContainer.appendChild(confetti);
+
+                setTimeout(() => {
+                    confetti.remove();
+                }, 8000);
+            }
+        }
+
+        function getRandomColor() {
+            const colors = ['#ff6f91', '#ff9a9e', '#ff4d6d', '#ffe4e1', '#ff99cc'];
+            return colors[Math.floor(Math.random() * colors.length)];
+        }
+        
+        function startAudio() {
+        // Play the first audio
+        audio1.play();
+        
+        // When the first audio ends, play the second audio
+        audio1.onended = function() {
+            audio2.play();
+        };
+
+        // When the second audio ends, play the first audio again
+        audio2.onended = function() {
+            audio1.play();
+        };
+    }
+
+
+    </script>
+</body>
+</html>
