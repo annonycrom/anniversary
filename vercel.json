@@ -1,5 +1,5 @@
 {
   "routes": [
-    { "src": "/(.*)", "dest": "/anniversary.html" }
+    { "src": "/(.*)", "dest": "/1st/anniversary.html" }
   ]
 }
